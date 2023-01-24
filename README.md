@@ -18,3 +18,14 @@ borrow selectively from this repo, please feel free to do so.
 ## Installation
 
 You can install dependencies using `yarn install` and run the app using `yarn dev`.
+
+## Features implemented
+
+- Highlighted the row / column headings bold.
+  Known issue: the width of the cells in the header row is off, so the header cells don't align with their underlying columns
+- Formatted the numeric cell values.
+  A couple of rough edges:
+  - It would be better if on focus, the raw number was displayed. Entry is a little funky right now
+  - At the moment, the number formatter rounds up the currency to two decimal places. It's not a good UX when the cent numbers are rounded up or down on the spot; makes it appear as if what you are entering is not being registered correctly
+- Added an arrow key press handler to move the cell value up, down, left, or right.
+  An improvement: there is a LOT of code in the onMove handler within Spreadsheet right now. Ideally, it would be moved out somewhere, so the component code is easier to read.

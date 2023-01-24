@@ -15,6 +15,8 @@ const Spreadsheet: React.FC = () => {
 
   /**
    * @todo the UI of the header row is shifted funny
+   *
+   * @todo onMove handler should be taken out of this component into a util
    */
   return (
     <Box width="full">
