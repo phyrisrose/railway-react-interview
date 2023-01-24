@@ -7,9 +7,10 @@ interface Props {
   value: string;
   type: 'header' | 'data';
   onChange: (newValue: string) => void;
+  onMove: (direction: string) => void /** @todo make a type with the moving directions */;
 }
 
-const Cell: React.FC<Props> = ({ value, type, onChange }) => {
+const Cell: React.FC<Props> = ({ value, type, onChange, onMove }) => {
   const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (ev) => {
       // try to format the currency string back to a number, for cleaner storage
@@ -29,7 +30,7 @@ const Cell: React.FC<Props> = ({ value, type, onChange }) => {
    * @param ev
    */
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (ev) => {
-    console.log('key', ev.key);
+    onMove(ev.key);
   };
 
   const headerProps = {

@@ -43,6 +43,9 @@ const Spreadsheet: React.FC = () => {
                       ...cellState.slice(rowIdx + 1),
                     ]);
                   }}
+                  onMove={(direction: string) => {
+                    console.log(`moving [${rowIdx}][${columnIdx}] to ${direction}`);
+                  }}
                 />
               );
             })}
