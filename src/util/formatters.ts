@@ -5,7 +5,7 @@
  * @returns
  */
 export const formatCurrency = (input: number) => {
-  const dolarUSLocale = Intl.NumberFormat('en-US');
+  const dollarUSLocale = Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
-  return `${dolarUSLocale.format(input)}`;
+  return dollarUSLocale.format(input);
 };
