@@ -17,15 +17,14 @@ const Spreadsheet: React.FC = () => {
    * * Are the labels frozen?
    */
 
-  /**
-   * as far as rows, — just add the first row designated as label. Note: first cell needs to be empty
-   * @todo define what a label cell means
-   * For now, let's just say it's a bolded cell
-   */
   const [cellState, setCellState] = useState(
     _.times(NUM_ROWS, () => _.times(NUM_COLUMNS, _.constant(''))),
   );
 
+  /**
+   * @todo distinguish header from data cells
+   * hint: a numeric cell can be formatted, if it's a number
+   */
   return (
     <Box width="full">
       {cellState.map((row, rowIdx) => {
@@ -35,6 +34,7 @@ const Spreadsheet: React.FC = () => {
               <Cell
                 key={`${rowIdx}/${columnIdx}`}
                 value={cellValue}
+                type="data"
                 onChange={(newValue: string) => {
                   const newRow = [
                     ...cellState[rowIdx].slice(0, columnIdx),
