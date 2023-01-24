@@ -8,6 +8,14 @@ const NUM_ROWS = 10;
 const NUM_COLUMNS = 10;
 
 const Spreadsheet: React.FC = () => {
+  /**
+   * @todo add column & row labels
+   *
+   * Considerations
+   * * splice in, or edit after the fact?
+   * * Are the labels editable? Or just numbers, bolded?
+   * * Are the labels frozen?
+   */
   const [cellState, setCellState] = useState(
     _.times(NUM_ROWS, () => _.times(NUM_COLUMNS, _.constant(''))),
   );
