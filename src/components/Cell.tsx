@@ -19,6 +19,19 @@ const Cell: React.FC<Props> = ({ value, type, onChange }) => {
     [onChange],
   );
 
+  /**
+   * Keys we care for:
+   * * ArrowDown
+   * * ArrowUp
+   * * ArrowRight
+   * * ArrowLeft
+   *
+   * @param ev
+   */
+  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (ev) => {
+    console.log('key', ev.key);
+  };
+
   const headerProps = {
     fontWeight: 'bold',
   };
@@ -31,7 +44,8 @@ const Cell: React.FC<Props> = ({ value, type, onChange }) => {
 
   const possibleNumber = Number(value);
 
-  const formattedValue = !isNaN(possibleNumber) ? formatCurrency(possibleNumber) : value;
+  const shouldFormatCell = type === 'data' && !isNaN(possibleNumber) && value !== '';
+  const formattedValue = shouldFormatCell ? formatCurrency(possibleNumber) : value;
 
   return (
     <Box>
@@ -40,6 +54,7 @@ const Cell: React.FC<Props> = ({ value, type, onChange }) => {
         borderRadius={0}
         width="full"
         onChange={handleOnChange}
+        onKeyDown={handleKeyDown}
         {...inputProps}
       />
     </Box>
