@@ -63,7 +63,7 @@ const Spreadsheet: React.FC = () => {
 
                     const newSourceRow = [
                       ...cellState[rowIdx].slice(0, columnIdx),
-                      cellValue,
+                      '',
                       ...cellState[rowIdx].slice(columnIdx + 1),
                     ];
 
