@@ -12,13 +12,7 @@ interface Props {
 const Cell: React.FC<Props> = ({ value, type, onChange }) => {
   const onChangeHandler: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (ev) => {
-      const possibleNumber = Number(ev.target.value);
-
-      const transformedValue = !isNaN(possibleNumber)
-        ? formatCurrency(possibleNumber)
-        : ev.target.value;
-
-      onChange(transformedValue);
+      onChange(ev.target.value);
     },
     [onChange],
   );
@@ -33,10 +27,14 @@ const Cell: React.FC<Props> = ({ value, type, onChange }) => {
 
   const inputProps = type === 'header' ? headerProps : dataCellProps;
 
+  const possibleNumber = Number(value);
+
+  const formattedValue = !isNaN(possibleNumber) ? formatCurrency(possibleNumber) : value;
+
   return (
     <Box>
       <Input
-        value={value}
+        value={formattedValue}
         borderRadius={0}
         width="full"
         onChange={onChangeHandler}
