@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 
 interface Props {
   value: string;
+  type: 'header' | 'data';
   onChange: (newValue: string) => void;
 }
 

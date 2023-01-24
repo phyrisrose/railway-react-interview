@@ -16,6 +16,12 @@ const Spreadsheet: React.FC = () => {
    * * Are the labels editable? Or just numbers, bolded?
    * * Are the labels frozen?
    */
+
+  /**
+   * as far as rows, — just add the first row designated as label. Note: first cell needs to be empty
+   * @todo define what a label cell means
+   * For now, let's just say it's a bolded cell
+   */
   const [cellState, setCellState] = useState(
     _.times(NUM_ROWS, () => _.times(NUM_COLUMNS, _.constant(''))),
   );
