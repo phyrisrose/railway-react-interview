@@ -1,6 +1,8 @@
 import { Input, Box } from '@chakra-ui/react';
 import React, { useCallback } from 'react';
 
+import { formatCurrency } from '../util';
+
 interface Props {
   value: string;
   type: 'header' | 'data';
@@ -10,7 +12,13 @@ interface Props {
 const Cell: React.FC<Props> = ({ value, type, onChange }) => {
   const onChangeHandler: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (ev) => {
-      onChange(ev.target.value);
+      const possibleNumber = Number(ev.target.value);
+
+      const transformedValue = !isNaN(possibleNumber)
+        ? formatCurrency(possibleNumber)
+        : ev.target.value;
+
+      onChange(transformedValue);
     },
     [onChange],
   );
