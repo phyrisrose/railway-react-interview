@@ -50,36 +50,50 @@ const Spreadsheet: React.FC = () => {
                       `moving [${rowIdx}][${columnIdx}] to ${direction}, at [${newRowIdx}][${newColumnIdx}]`,
                     );
 
-                    // overwrite the new location
-                    // wipe the current location
+                    const isVerticalMovement = newRowIdx !== rowIdx;
+                    if (isVerticalMovement) {
+                      const newDestinationRow = [
+                        ...cellState[newRowIdx].slice(0, columnIdx),
+                        cellValue,
+                        ...cellState[newRowIdx].slice(columnIdx + 1),
+                      ];
 
-                    // likely need current row, and new row. and then set two rows.
-                    // this is the new current row
-                    const newDestinationRow = [
-                      ...cellState[newRowIdx].slice(0, columnIdx),
-                      cellValue,
-                      ...cellState[newRowIdx].slice(columnIdx + 1),
-                    ];
+                      const newSourceRow = [
+                        ...cellState[rowIdx].slice(0, columnIdx),
+                        '',
+                        ...cellState[rowIdx].slice(columnIdx + 1),
+                      ];
 
-                    const newSourceRow = [
-                      ...cellState[rowIdx].slice(0, columnIdx),
-                      '',
-                      ...cellState[rowIdx].slice(columnIdx + 1),
-                    ];
+                      // determine order of row insertion
+                      const newRows =
+                        newRowIdx < rowIdx
+                          ? [newDestinationRow, newSourceRow]
+                          : [newSourceRow, newDestinationRow];
 
-                    // determine order of row insertion
-                    const newRows =
-                      newRowIdx < rowIdx
-                        ? [newDestinationRow, newSourceRow]
-                        : [newSourceRow, newDestinationRow];
+                      // now, here, we find the new start insertion row index
+                      const startInsertionIdx = newRowIdx < rowIdx ? newRowIdx : rowIdx;
+                      setCellState([
+                        ...cellState.slice(0, startInsertionIdx),
+                        ...newRows,
+                        ...cellState.slice(startInsertionIdx + 2),
+                      ]);
+                    } else {
+                      // we have a lateral movement
+                      const startInsertionIdx = newColumnIdx < columnIdx ? newColumnIdx : columnIdx;
+                      const newColumns =
+                        newColumnIdx < columnIdx ? [cellValue, ''] : ['', cellValue];
 
-                    // now, here, we find the new start insertion row index
-                    const startInsertionIdx = newRowIdx < rowIdx ? newRowIdx : rowIdx;
-                    setCellState([
-                      ...cellState.slice(0, startInsertionIdx),
-                      ...newRows,
-                      ...cellState.slice(startInsertionIdx + 2),
-                    ]);
+                      const newRow = [
+                        ...cellState[rowIdx].slice(0, startInsertionIdx),
+                        ...newColumns,
+                        ...cellState[rowIdx].slice(startInsertionIdx + 2),
+                      ];
+                      setCellState([
+                        ...cellState.slice(0, rowIdx),
+                        newRow,
+                        ...cellState.slice(rowIdx + 1),
+                      ]);
+                    }
                   }}
                 />
               );
