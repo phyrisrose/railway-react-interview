@@ -19,7 +19,11 @@ const Cell: React.FC<Props> = ({ value, type, onChange }) => {
     fontWeight: 'bold',
   };
 
-  const inputProps = type === 'header' ? headerProps : {};
+  const dataCellProps = {
+    fontWeight: 'normal',
+  };
+
+  const inputProps = type === 'header' ? headerProps : dataCellProps;
 
   return (
     <Box>
