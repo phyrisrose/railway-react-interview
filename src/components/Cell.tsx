@@ -1,7 +1,7 @@
 import { Input, Box } from '@chakra-ui/react';
 import React, { useCallback } from 'react';
 
-import { formatCurrency } from '../util';
+import { formatCurrency, formatNumberToCurrency } from '../util';
 
 interface Props {
   value: string;
@@ -10,9 +10,11 @@ interface Props {
 }
 
 const Cell: React.FC<Props> = ({ value, type, onChange }) => {
-  const onChangeHandler: React.ChangeEventHandler<HTMLInputElement> = useCallback(
+  const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (ev) => {
-      onChange(ev.target.value);
+      // try to format the currency string back to a number, for cleaner storage
+      const formattedValue = formatNumberToCurrency(ev.target.value);
+      onChange(formattedValue);
     },
     [onChange],
   );
@@ -37,7 +39,7 @@ const Cell: React.FC<Props> = ({ value, type, onChange }) => {
         value={formattedValue}
         borderRadius={0}
         width="full"
-        onChange={onChangeHandler}
+        onChange={handleOnChange}
         {...inputProps}
       />
     </Box>
