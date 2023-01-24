@@ -24,31 +24,40 @@ const Spreadsheet: React.FC = () => {
   /**
    * @todo distinguish header from data cells
    * hint: a numeric cell can be formatted, if it's a number
+   * Do we distinguish types of cells at the generation,
+   * or at the rendering step? --> let's do rendering
    */
   return (
     <Box width="full">
       {cellState.map((row, rowIdx) => {
         return (
           <Flex key={String(rowIdx)}>
-            {row.map((cellValue, columnIdx) => (
-              <Cell
-                key={`${rowIdx}/${columnIdx}`}
-                value={cellValue}
-                type="data"
-                onChange={(newValue: string) => {
-                  const newRow = [
-                    ...cellState[rowIdx].slice(0, columnIdx),
-                    newValue,
-                    ...cellState[rowIdx].slice(columnIdx + 1),
-                  ];
-                  setCellState([
-                    ...cellState.slice(0, rowIdx),
-                    newRow,
-                    ...cellState.slice(rowIdx + 1),
-                  ]);
-                }}
-              />
-            ))}
+            {row.map((cellValue, columnIdx) => {
+              const isFirstRow = rowIdx === 0;
+              const isFirstColumn = columnIdx === 0;
+              const isHeaderCell = isFirstRow || isFirstColumn;
+
+              const type = isHeaderCell ? 'header' : 'data';
+              return (
+                <Cell
+                  key={`${rowIdx}/${columnIdx}`}
+                  value={cellValue}
+                  type={type}
+                  onChange={(newValue: string) => {
+                    const newRow = [
+                      ...cellState[rowIdx].slice(0, columnIdx),
+                      newValue,
+                      ...cellState[rowIdx].slice(columnIdx + 1),
+                    ];
+                    setCellState([
+                      ...cellState.slice(0, rowIdx),
+                      newRow,
+                      ...cellState.slice(rowIdx + 1),
+                    ]);
+                  }}
+                />
+              );
+            })}
           </Flex>
         );
       })}
